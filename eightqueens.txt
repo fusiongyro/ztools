@@ -1,0 +1,25 @@
+Eight Queens
+
+Eight queens must be placed on a chessboard so that no queen attacks any others. A chessboard is a square grid with eight columns, or *files*, and eight rows, or *ranks*. When a queen is placed on a square, it attacks any other queen that sits on the same rank, file, or diagonals.
+
+%%Z
+   SIZE == 8 
+   RANK == 1 .. SIZE
+   FILE == 1 .. SIZE 
+   SQUARE == RANK x FILE
+   DIAGONAL == 1-SIZE .. SIZE * 2
+%%
+
++..
+up, down : SQUARE --> DIAGONAL
+|--
+A f : FILE; r : RANK @ 
+      up (f,r) = r - f /\
+      down (f, r) = r + f
+-..
+
++-- Queens ---
+squares : FILE >-->> RANK
+|--
+{ squares <| up, squares <| down } c_ SQUARE >--> DIAGONAL
+---

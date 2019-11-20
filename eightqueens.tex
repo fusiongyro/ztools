@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{fuzz}
+
+\title{Eight Queens}
+\author{Jonathan Jacky}
+
+\begin{document}
+
+\section{Eight Queens}
+
+Eight queens must be placed on a chessboard so that no queen attacks any others. A chessboard is a square grid with eight columns, or {\em files}, and eight rows, or {\em ranks}. When a queen is placed on a square, it attacks any other queen that sits on the same rank, file, or diagonals.
+
+\begin{zed}
+        SIZE == 8 
+\also   RANK == 1 \upto SIZE
+\also   FILE == 1 \upto SIZE 
+\also   SQUARE == RANK \cross FILE
+\also   DIAGONAL == 1-SIZE \upto SIZE * 2
+\end{zed}
+
+\begin{axdef}
+up, down : SQUARE \fun DIAGONAL
+\where
+\forall f : FILE; r : RANK @ \\
+\t1 up\ (f,r) = r - f \land \\
+\t1 down\ (f, r) = r + f
+\end{axdef}
+
+\begin{schema}{Queens}
+  squares : FILE \bij RANK
+\where
+\{ squares \dres up, squares \dres down \} \subseteq SQUARE \inj DIAGONAL
+\end{schema}
+
+\end{document}

@@ -74,7 +74,7 @@ Z { printf("ℤ"); }
 \^ { printf("⁀"); }
 \/\| { printf("↿"); }
 \|\\ { printf("↾"); }
-. { printf(yytext); }
+. { printf("%s", yytext); }
 %%
 int main() {
   yylex();
