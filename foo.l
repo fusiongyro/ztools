@@ -1,80 +1,96 @@
 %{
 #include <stdio.h>
 %}
+
 %option noyywrap
+%x Z
+
 %%
-Delta { printf("∆"); }
-Xi { printf("Ξ"); }
-theta { printf("θ"); }
-lambda { printf("λ"); }
-mu { printf("μ"); }
-arithmos { printf("𝔸"); }
-N { printf("ℕ"); }
-P { printf("ℙ"); }
-\/^ { printf("↗"); }
-v\/ { printf("↙"); }
-\\v { printf("↘"); }
-^\\ { printf("↖"); }
-\<\< { printf("《"); }
->> { printf("》"); }
-\<\| { printf("⦉"); }
-\|> { printf("⦊"); }
-\|- { printf("⊢"); }
-\/\\ { printf("∧"); }
-\/ { printf("∨"); }
-==> { printf("⇒"); }
-\<=> { printf("⇔"); }
-not { printf("¬"); }
-A { printf("∀"); }
-E { printf("∃"); }
-x { printf("×"); }
-e { printf("∈"); }
-@ { printf("⦁"); }
-S\\ { printf("⧹"); }
-S\|\\ { printf("⨡"); }
-S\; { printf("⨟"); }
-S>> { printf("⨠"); }
-\<--> { printf("↔"); }
---> { printf("→"); }
-\/= { printf("≠"); }
-\/e { printf("∉"); }
-\(\/\) { printf("∅"); }
-c_ { printf("⊆"); }
-c { printf("⊂"); }
-u { printf("∪"); }
-n { printf("∩"); }
-(-) { printf("⊖"); }
-uu { printf("⋃"); }
-nn { printf("⋂"); }
-F { printf("𝔽"); }
-\|--> { printf("↦"); }
-\; { printf("⨾"); }
-o { printf("∘"); }
-\<: { printf("◁"); }
-:> { printf("▷"); }
-\<-: { printf("⩤"); }
-:-> { printf("⩥"); }
-~ { printf("∼"); }
-\(\| { printf("⦇"); }
-\|\) { printf("⦈"); }
-\(\+\) { printf("⊕"); }
--\|-> { printf("⇸"); }
->-\|-> { printf("⤔"); }
->--> { printf("↣"); }
--\|->> { printf("⤀"); }
--->> { printf("↠"); }
->-->> { printf("⤖"); }
--\|\|-> { printf("⇻"); }
->-\|\|-> { printf("⤕"); }
-Z { printf("ℤ"); }
-\<= { printf("≤"); }
->= { printf("≥"); }
-\< { printf("〈"); }
-> { printf("〉"); }
-\^ { printf("⁀"); }
-\/\| { printf("↿"); }
-\|\\ { printf("↾"); }
+
+^\%\%Z { BEGIN(Z); }
+<Z>^\%\% { BEGIN(INITIAL); }
 . { printf("%s", yytext); }
+
+^\+\.\.\n { printf("│ "); BEGIN(Z); }
+<Z>^-\.\. { BEGIN(INITIAL); }
+<Z>^\|--\n { printf("├────────────\n"); }
+
+^\+-- { printf("┌─── "); BEGIN(Z); }
+<Z>^---\n { printf("└──────────────────────────────────────────────────────"); BEGIN(INITIAL); }
+
+<Z>Delta { printf("∆"); }
+<Z>Xi { printf("Ξ"); }
+<Z>theta { printf("θ"); }
+<Z>lambda { printf("λ"); }
+<Z>mu { printf("μ"); }
+<Z>arithmos { printf("𝔸"); }
+<Z>N { printf("ℕ"); }
+<Z>P { printf("ℙ"); }
+<Z>\/^ { printf("↗"); }
+<Z>v\/ { printf("↙"); }
+<Z>\\v { printf("↘"); }
+<Z>^\\ { printf("↖"); }
+<Z>\<\< { printf("《"); }
+<Z>>> { printf("》"); }
+<Z>\<\| { printf("⦉"); }
+<Z>\|> { printf("⦊"); }
+<Z>\|- { printf("⊢"); }
+<Z>\/\\ { printf("∧"); }
+<Z>\/ { printf("∨"); }
+<Z>==> { printf("⇒"); }
+<Z>\<=> { printf("⇔"); }
+<Z>not { printf("¬"); }
+<Z>A { printf("∀"); }
+<Z>E { printf("∃"); }
+<Z>x { printf("×"); }
+<Z>e { printf("∈"); }
+<Z>@ { printf("⦁"); }
+<Z>S\\ { printf("⧹"); }
+<Z>S\|\\ { printf("⨡"); }
+<Z>S\; { printf("⨟"); }
+<Z>S>> { printf("⨠"); }
+<Z>\<--> { printf("↔"); }
+<Z>--> { printf("→"); }
+<Z>\/= { printf("≠"); }
+<Z>\/e { printf("∉"); }
+<Z>\(\/\) { printf("∅"); }
+<Z>c_ { printf("⊆"); }
+<Z>c { printf("⊂"); }
+<Z>u { printf("∪"); }
+<Z>n { printf("∩"); }
+<Z>(-) { printf("⊖"); }
+<Z>uu { printf("⋃"); }
+<Z>nn { printf("⋂"); }
+<Z>F { printf("𝔽"); }
+<Z>\|--> { printf("↦"); }
+<Z>\; { printf("⨾"); }
+<Z>o { printf("∘"); }
+<Z>\<: { printf("◁"); }
+<Z>:> { printf("▷"); }
+<Z>\<-: { printf("⩤"); }
+<Z>:-> { printf("⩥"); }
+<Z>~ { printf("∼"); }
+<Z>\(\| { printf("⦇"); }
+<Z>\|\) { printf("⦈"); }
+<Z>\(\+\) { printf("⊕"); }
+<Z>-\|-> { printf("⇸"); }
+<Z>>-\|-> { printf("⤔"); }
+<Z>>--> { printf("↣"); }
+<Z>-\|->> { printf("⤀"); }
+<Z>-->> { printf("↠"); }
+<Z>>-->> { printf("⤖"); }
+<Z>-\|\|-> { printf("⇻"); }
+<Z>>-\|\|-> { printf("⤕"); }
+<Z>Z { printf("ℤ"); }
+<Z>\<= { printf("≤"); }
+<Z>>= { printf("≥"); }
+<Z>\< { printf("〈"); }
+<Z>> { printf("〉"); }
+<Z>\^ { printf("⁀"); }
+<Z>\/\| { printf("↿"); }
+<Z>\|\\ { printf("↾"); }
+<Z>. { printf("%s", yytext); }
+
 %%
 int main() {
   yylex();
