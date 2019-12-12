@@ -28,14 +28,9 @@ Proof.
   left. apply H.
 Qed.
 
-(* And here's disj_comm in ssreflect *)
-Theorem disj_comm' : forall P Q : Prop, P \/ Q -> Q \/ P.
-Proof.
-  move => P Q H.
-  case H.
-  right.
-(* didn't quite figure this one out. probably need to understand more before getting to excited about ssreflect *)
-Abort.
+(* and here's disj_comm in ssreflect *)
+Lemma disj_comm' : forall P Q : Prop, P \/ Q -> Q \/ P.
+Proof. move => P Q. by case; [right | left]. Qed.
 
 (* Here's another proof from Using Z *)
 Theorem paqir_implies_piqir : forall P Q R : Prop, (P /\ Q -> R) -> (P -> (Q -> R)).
