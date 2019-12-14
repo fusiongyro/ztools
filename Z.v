@@ -83,3 +83,33 @@ Proof.
   pose (proof_of_B := A_implies_B proof_of_A).
   exact proof_of_B.
 Qed.
+
+Lemma p_and_q_implies_p A B : A /\ B -> A.
+Proof.
+  move => [HA _].
+    by [].
+Qed.
+
+(* This is Example 2.9 from _Using Z_ *)
+
+Theorem p_stronger_q : forall P Q : Prop, (P -> Q) -> (P /\ Q) <-> P.
+Proof.
+  intros P Q H.
+  split.
+  - (* P /\ Q -> P *) intros [HP HQ].
+    apply HP.
+  - (* P -> P /\ Q *) intros HP.
+    pose (H2 := conj HP (H HP)).
+    apply H2.
+    (* alternate approach, instead of 'pose...': 
+    apply H in HP as HQ.
+    apply conj. apply HP. apply HQ. *)
+Qed.
+
+Lemma my_demorgan1 P Q : ~(P \/ Q) -> ~P /\ ~Q.
+Proof.
+  intros H.
+  split.
+  - (* ~ (P \/ Q) -> ~P *) intro HP. apply H. left. exact HP.
+  - (* ~ (P \/ Q) -> ~Q *) intro HQ. apply H. right. exact HQ.
+Qed.
